@@ -1,0 +1,314 @@
+<html>
+  <head>
+    <title>القرين تولز</title>
+    <link REL="SHORTCUT ICON" href="/qaren.png">
+    <link href="https://fonts.googleapis.com/css?family=Changa" rel="stylesheet">
+    <style>
+ @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+@mixin object($width, $height, $bg) {
+	width: $width;
+	height: $height;
+	background: $bg;
+}
+
+@mixin transPos($top, $right, $bottom, $left,$transX,$transY) {
+	position: absolute;
+	top: $top;
+	left: $left;
+	right: $right;
+	bottom: $bottom;
+	transform: translate($transX, $transY);
+}
+
+@mixin center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: linear-gradient(-45deg, #00c6fb 0%, #005bea 100%);
+}
+
+ul {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-auto-rows: 50vh;
+}
+
+li {
+	border: 1px solid rgba(#fff, 0.1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+h4 {
+	@include transPos(null,null,8vh,50%,-50%,0);
+	text-align: center;
+	margin-top: 40px;
+	color: #fff;
+	font-family: "Open Sans", sans-serif;
+}
+
+@media screen and (max-width: 767px) {
+	ul {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (max-width: 567px) {
+	ul {
+		grid-template-columns: 1fr;
+		grid-auto-rows: 100vh;
+	}
+}
+
+span {
+	border-radius: 4px;
+	display: block;
+}
+
+/***
+Easing
+***/
+
+#easing {
+	overflow: hidden;
+	width: 200px;
+	span {
+		@include object(80px,80px,#fff);
+		animation: easing 2s ease-out infinite;
+		@keyframes easing {
+			0% {
+				transform: translateX(-120px);
+			}
+			75% {
+				transform: translateX(40px);
+			}
+			100% {
+				transform: translateX(250px);
+			}
+		}
+	}
+}
+
+/***
+Parenting
+***/
+
+#parenting {
+	span {
+		@include object(100px,40px,#fff);
+		margin: 10px 0;
+		animation: slide 1s ease-in-out infinite alternate;
+		@keyframes slide {
+			0% {
+				transform: translateX(-50px);
+			}
+			100% {
+				transform: translateX(50px);
+			}
+		}
+		&:first-child {
+			transform-origin: 50% 100%;
+			animation: growShrink 1s ease-in-out infinite alternate;
+			@keyframes growShrink {
+				0% {
+					transform: translateX(-50px) scale(0.1);
+				}
+				100% {
+					transform: translateX(50px) scale(1);
+				}
+			}
+		}
+	}
+}
+
+/***
+Obscuration
+***/
+#obscuration {
+	@include object(60px,80px,#fff);
+	border-radius: 4px;
+	position: relative;
+	span {
+		opacity: 0.7;
+		@include object(90px,110px,#f7f7f7);
+		@include transPos(50%,null,null,-60px,0,-50%);
+		animation: obscure 1s cubic-bezier(0.6, 0, 0.4, 1) infinite alternate;
+		@keyframes obscure {
+			100% {
+				left: 30px;
+			}
+		}
+	}
+}
+
+/***
+Dolly & Zoom
+***/
+
+#dollyZoom {
+	@include object(160px,100px,transparent);
+	overflow: hidden;
+	border-radius: 4px;
+	position: relative;
+	ul {
+		@include object(480px,300px,transparent);
+		@include transPos(50%,null,null,50%,-50%,-50%);
+		border-radius: 4px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-auto-rows: 100px;
+		grid-gap: 3px;
+		transform-origin: -34% -34%;
+		animation: zoom 1s ease-in-out infinite alternate;
+		@keyframes zoom {
+			100% {
+				transform: scale(0.4);
+			}
+		}
+	}
+	li {
+		background: #fff;
+		border-radius: 0;
+	}
+}
+
+/***
+Transformation
+***/
+
+#transformation {
+	@include object(60px,60px,#fff);
+	border-radius: 50%;
+	animation: transform 1s ease-in-out infinite alternate;
+	@keyframes transform {
+		100% {
+			width: 150px;
+			border-radius: 4px;
+		}
+	}
+}
+
+/***
+Masking
+***/
+
+#masking {
+	@include object(150px,60px,#EAEAEA);
+	@include center;
+	border-radius: 4px;
+	span {
+		@include object(30px,30px,#fff);
+		border-radius: 50%;
+		animation: transform 1s ease-in-out infinite alternate;
+		@keyframes transform {
+			100% {
+				width: 150px;
+				height: 60px;
+				border-radius: 4px;
+			}
+		}
+	}
+}
+
+/***
+Parallax
+***/
+
+#parallax {
+	@include object(160px,90px,#EAEAEA);
+	@include center;
+	border-radius: 4px;
+	span {
+		@include object(120px,90px,#fff);
+		animation: parallax 1s ease-in-out infinite alternate;
+		@keyframes parallax {
+			0% {
+				transform: translateY(-20px);
+			}
+			100% {
+				transform: translateY(20px);
+			}
+		}
+	}
+}
+
+/***
+Dimentionality
+***/
+li:nth-child(5) {
+	perspective: 400px;
+}
+#dimension {
+	@include object(190px,60px,#fff);
+	border-radius: 4px;
+	animation: dimension 1s ease-in-out infinite alternate;
+	@keyframes dimension {
+		100% {
+			transform: rotateX(-90deg);
+		}
+	}
+}
+</style>
+  </head>
+  <body> 
+
+<ul>
+  <li>
+    <div id="easing"><span></span></div>
+    <h4>Easing</h4>
+  </li>
+  <li>
+    <div id="parenting"><span></span><span></span></div>
+    <h4>Parenting</h4>
+  </li>
+  <li>
+    <div id="obscuration"><span></span></div>
+    <h4>Obscuration</h4>
+  </li>
+  <li>
+    <div id="parallax"><span></span></div>
+    <h4>Parallax</h4>
+  </li>
+  <li>
+    <div id="dimension"></div>
+    <h4>Dimentionality</h4>
+  </li>
+  <li>
+    <div id="transformation"></div>
+    <h4>Transformation</h4>
+  </li>
+  <li>
+    <div id="dollyZoom">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <h4>Dolly & Zoom</h4>
+  </li>
+  <li>
+    <div id="masking"><span></span></div>
+    <h4>Masking</h4>
+  </li>
+</ul>
+  </body>
+</html>
